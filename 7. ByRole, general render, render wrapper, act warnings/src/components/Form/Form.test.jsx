@@ -1,4 +1,4 @@
-import { fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 
 import { Form } from './Form';
 import { renderWithProviders } from '../../utils/renderWithProviders';
@@ -13,6 +13,26 @@ describe('Form', () => {
 
     expect(container.querySelector('form')).toBeInTheDocument();
     expect(getByTestId('my-child')).toBeInTheDocument();
+  });
+
+  it('should render Form with className', () => {
+    renderWithProviders(<Form className='myClass' />);
+
+    const formEl = screen.getByRole('form');
+
+    expect(formEl).toBeInTheDocument();
+    expect(formEl).toHaveClass('form');
+    expect(formEl).toHaveClass('myClass');
+  });
+
+  it('should render Form with dark theme', () => {
+    renderWithProviders(<Form />, { theme: 'dark' });
+
+    const formEl = screen.getByRole('form');
+
+    expect(formEl).toBeInTheDocument();
+    expect(formEl).toHaveClass('form');
+    expect(formEl).toHaveClass('dark');
   });
 
   it('should invoke the onSubmit callback', () => {
